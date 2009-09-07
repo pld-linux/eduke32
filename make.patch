@@ -1,0 +1,48 @@
+--- eduke32_src_20090131/Makefile	2009-09-07 22:57:33.442033657 +0300
++++ eduke32_src_20090131/Makefile	2009-09-07 23:07:45.211972167 +0300
+@@ -36,10 +36,11 @@
+ INC=$(SRC)
+ o=o
+ # ENETROOT=$(ESRC)/enet
++OPTFLAGS=-O$(OPTLEVEL)
+ 
+ ifneq (0,$(RELEASE))
+ 	# Debugging disabled
+-  debug=-fomit-frame-pointer -funswitch-loops -O$(OPTLEVEL)
++  debug=-fomit-frame-pointer -funswitch-loops $(OPTFLAGS)
+ else
+ 	# Debugging enabled
+   debug=-ggdb -O0 -DDEBUGGINGAIDS
+@@ -47,6 +48,7 @@
+ CC=gcc
+ CXX=g++
+ AS=nasm
++STRIP=strip
+ 
+ GCC_MAJOR    := $(shell $(CC) -dumpversion 2>&1 | cut -d'.' -f1)
+ GCC_MINOR    := $(shell $(CC) -dumpversion 2>&1 | cut -d'.' -f2)
+@@ -253,21 +255,21 @@
+ 	$(LINK_STATUS)
+ 	if $(CC) -o $@ $^ $(LIBS) $(STDCPPLIB); then $(LINK_OK); else $(LINK_FAILED); fi
+ ifeq (1,$(RELEASE))
+-	strip eduke32$(EXESUFFIX)
++	$(STRIP) eduke32$(EXESUFFIX)
+ endif
+ 	
+ mapster32$(EXESUFFIX): $(EDITOROBJS) $(EOBJ)/$(EDITORLIB) $(EOBJ)/$(ENGINELIB)
+ 	$(LINK_STATUS)
+ 	if $(CC) $(CFLAGS) $(OURCFLAGS) -o $@ $^ $(LIBS) $(STDCPPLIB); then $(LINK_OK); else $(LINK_FAILED); fi
+ ifeq (1,$(RELEASE))	
+-	strip mapster32$(EXESUFFIX)
++	$(STRIP) mapster32$(EXESUFFIX)
+ endif	
+ 
+ duke3d_w32$(EXESUFFIX): $(OBJ)/wrapper.$o
+ 	$(LINK_STATUS)
+ 	if $(CC) $(CFLAGS) $(OURCFLAGS) -o $@ $^ -Wl; then $(LINK_OK); else $(LINK_FAILED); fi
+ ifeq (1,$(RELEASE))	
+-	strip duke3d_w32$(EXESUFFIX)
++	$(STRIP) duke3d_w32$(EXESUFFIX)
+ endif	
+ 
+ include Makefile.deps
