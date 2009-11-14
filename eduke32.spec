@@ -16,6 +16,7 @@ Source1:	http://dukeworld.duke4.net/eduke32/source_code/%{name}_src_%{patch}.dif
 Patch0:		make.patch
 URL:		http://www.eduke32.com/
 BuildRequires:	OpenAL-devel
+BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	SDL-devel
 BuildRequires:	SDL_mixer-devel
 BuildRequires:	gtk+2-devel
@@ -23,6 +24,7 @@ BuildRequires:	libogg-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	nasm
+BuildRequires:	unzip
 ExclusiveArch:	%{ix86} %{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
